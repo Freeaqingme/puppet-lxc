@@ -10,8 +10,7 @@ describe "lxc::ssh::key" do
     :key     => 'ssh key',
     :type    => 'ssh-rsa',
     :name    => 'vmguest@my-vm',
-    :user    => 'vmguest',
-    :options => '["command=\"/usr/sbin/nologin\"", "no-pty"]'
+    :user    => 'vmguest'
   ) end
 
   context "with $ensure => absent" do
