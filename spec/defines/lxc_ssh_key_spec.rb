@@ -17,7 +17,7 @@ describe "lxc::ssh::key" do
   context "with $ensure => absent" do
     let(:params) { default_params.merge(:ensure => "absent") }
     it do should contain_resource("Ssh_authorized_key[vmguest my-vm]").with(
-      :ensure  => 'absent',
+      :ensure  => 'absent'
     ) end
   end
 end
