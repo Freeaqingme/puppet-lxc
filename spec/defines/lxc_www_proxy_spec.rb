@@ -12,7 +12,7 @@ describe "lxc::www::proxy" do
   context "with $ensure => absent" do
     let(:params) { { :server_name => "example.com", :ensure => 'absent' } }
     it do should contain_resource("Nginx::Site[my-vm]").with(
-      :ensure  => 'absent',
+      :ensure  => 'absent'
     ) end
   end
 end
