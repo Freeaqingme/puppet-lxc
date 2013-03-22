@@ -1,0 +1,14 @@
+# Container with network virtualized using a pre-configured bridge named br0 and
+# veth pair virtual network devices
+lxc.utsname = <%= vm_hostname %>
+lxc.network.type = veth
+lxc.network.flags = up
+lxc.network.link = lxcbr0
+lxc.network.ipv4 = <%= vm_ip %>
+
+lxc.cgroup.memory.limit_in_bytes = <%= vm_mem_limit %>
+lxc.cgroup.memory.memsw.limit_in_bytes = <%= vm_swap_limit %>
+
+lxc.pts=1024
+
+

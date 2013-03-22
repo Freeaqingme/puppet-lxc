@@ -1,0 +1,6 @@
+fixtures:
+  repositories:
+    stdlib: 'git://github.com/puppetlabs/puppetlabs-stdlib.git'
+    nginx: 'git://github.com/BenoitCattie/puppet-nginx.git'
+  symlinks:
+    lxc: "#{source_dir}"
