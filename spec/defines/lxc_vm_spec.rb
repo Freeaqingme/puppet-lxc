@@ -59,7 +59,7 @@ describe "lxc::vm" do
     let(:params) { { :vm_hostname => 'my-vm.example.com' } }
 
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
-      :content => /my\-vm\.example\.com/,
+      :content => /my\-vm\.example\.com/
     ) end
   end
 
@@ -67,7 +67,7 @@ describe "lxc::vm" do
     let(:params) { { :vm_mem_limit => '123456' } }
 
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
-      :content => /123456/,
+      :content => /123456/
     ) end
   end
 
@@ -75,7 +75,7 @@ describe "lxc::vm" do
     let(:params) { { :vm_swap_limit => '123456' } }
 
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
-      :content => /123456/,
+      :content => /123456/
     ) end
   end
 
@@ -83,7 +83,7 @@ describe "lxc::vm" do
     let(:params) { { :vm_ip => '123456' } }
 
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
-      :content => /123456/,
+      :content => /123456/
     ) end
   end
 
