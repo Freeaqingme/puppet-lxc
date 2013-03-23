@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "lxc::vm" do
   let(:title) { 'my-vm' }
+  let(:facts) { { :fqdn => "vm.example.com" } }
 
   it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
     :ensure  => 'present',
@@ -26,6 +27,12 @@ describe "lxc::vm" do
     :target  => '/var/lib/lxc/my-vm/config',
     :require => 'Exec[lxc-create my-vm]'
   ) end
+
+  it "set default hostname" do
+    should contain_file("/etc/lxc/guests/my-vm.conf").with(
+      :content => /utsname = my-vm.vm.example.com/
+    )
+  end
 
   context "with $enable => false" do
     let(:params) { { :enable => false } }
@@ -59,7 +66,7 @@ describe "lxc::vm" do
     let(:params) { { :vm_hostname => 'my-vm.example.com' } }
 
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
-      :content => /my\-vm\.example\.com/
+      :content => /utsname = my-vm.example.com/
     ) end
   end
 
@@ -82,6 +89,13 @@ describe "lxc::vm" do
   context "with $vm_ip" do
     let(:params) { { :vm_ip => '123456' } }
 
+    it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
+      :content => /123456/
+    ) end
+  end
+
+  context "with $vm_hostname" do
+    let(:params) { { :vm_hostname => '123456' } }
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
       :content => /123456/
     ) end

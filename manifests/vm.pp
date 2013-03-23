@@ -2,7 +2,7 @@
 define lxc::vm(
   $vm_mem_limit  = '512M',
   $vm_mem_plus_swap_limit = '1024M',
-  $vm_hostname   = $name,
+  $vm_hostname   = undef,
   $vm_ip         = '0.0.0.0',
   $template      = 'ubuntu',
   $ensure        = 'present',
@@ -20,6 +20,11 @@ define lxc::vm(
   $lxc_destroy  = "/usr/bin/lxc-destroy -n ${name}"
   $lxc_info     = "/usr/bin/lxc-info -n ${name}"
   $lxc_shutdown = "/usr/bin/lxc-shutdown -n ${name} -w 60"
+
+  $vm_real_hostname = $vm_hostname ? {
+    undef   => "${name}.${::fqdn}",
+    default => $vm_hostname
+  }
 
   case $ensure {
     'present': {
