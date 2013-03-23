@@ -25,7 +25,8 @@ class lxc (
     ensure  => 'present',
     line    => "nameserver ${lxc::params::nameserver}",
     path    => '/etc/resolvconf/resolv.conf.d/head',
-    require => Service[$lxc::params::net_service],
+    require => [Service[$lxc::params::net_service],
+                Package['resolvconf']]
   }
 
   exec{ 'lxc resolvconf':

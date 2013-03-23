@@ -5,6 +5,8 @@ describe 'lxc' do
   it { should include_class("nginx") }
 
   it { should contain_package("lxc") }
+  it { should contain_package("resolvconf") }
+
   it do should contain_service("lxc").with(
     :ensure  => 'running',
     :enable  => true,
@@ -26,7 +28,7 @@ describe 'lxc' do
   it do should contain_exec("lxc resolvconf").with(
     :command     => '/sbin/resolvconf -u',
     :refreshonly => true,
-    :subscribe   => 'File_line[lxc resolver]'
+    :subscribe   => '[File_line[lxc resolver], Package[resolvconf]]'
   ) end
 
   it do should contain_user("vmguest").with(
