@@ -10,7 +10,7 @@ describe 'lxc' do
   it do should contain_service("lxc").with(
     :ensure  => 'running',
     :enable  => true,
-    :require => 'Package[lxc]'
+    :require => %w{ Package[lxc] Package[resolvconf] }
   ) end
 
   it do should contain_file("/etc/lxc/guests").with(
@@ -22,13 +22,13 @@ describe 'lxc' do
     :ensure  => 'present',
     :line    => 'nameserver 10.0.3.1',
     :path    => '/etc/resolvconf/resolv.conf.d/head',
-    :require => 'Service[lxc-net]'
+    :require => %w{ Service[lxc-net] Package[resolvconf] }
   ) end
 
   it do should contain_exec("lxc resolvconf").with(
     :command     => '/sbin/resolvconf -u',
     :refreshonly => true,
-    :subscribe   => '[File_line[lxc resolver], Package[resolvconf]]'
+    :subscribe   => 'File_line[lxc resolver]'
   ) end
 
   it do should contain_user("vmguest").with(
