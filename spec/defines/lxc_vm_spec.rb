@@ -71,8 +71,8 @@ describe "lxc::vm" do
     ) end
   end
 
-  context "with $vm_swap_limit" do
-    let(:params) { { :vm_swap_limit => '123456' } }
+  context "with $vm_mem_plus_swap_limit" do
+    let(:params) { { :vm_mem_plus_swap_limit => '123456' } }
 
     it do should contain_file("/etc/lxc/guests/my-vm.conf").with(
       :content => /123456/

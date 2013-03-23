@@ -7,7 +7,7 @@ lxc.network.link = lxcbr0
 lxc.network.ipv4 = <%= vm_ip %>
 
 lxc.cgroup.memory.limit_in_bytes = <%= vm_mem_limit %>
-lxc.cgroup.memory.memsw.limit_in_bytes = <%= vm_swap_limit %>
+lxc.cgroup.memory.memsw.limit_in_bytes = <%= vm_mem_plus_swap_limit %>
 
 lxc.pts=1024
 

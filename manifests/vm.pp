@@ -1,7 +1,7 @@
 #
 define lxc::vm(
   $vm_mem_limit  = '512M',
-  $vm_swap_limit = '512M',
+  $vm_mem_plus_swap_limit = '1024M',
   $vm_hostname   = $name,
   $vm_ip         = '0.0.0.0',
   $template      = 'ubuntu',
