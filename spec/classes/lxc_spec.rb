@@ -31,12 +31,16 @@ describe 'lxc' do
     :subscribe   => 'File_line[lxc resolver]'
   ) end
 
-  it do should contain_user("vmguest").with(
-    :ensure     => 'present',
-    :system     => true,
-    :managehome => true,
-    :shell      => '/bin/bash',
-    :home       => '/home/vmguest',
-    :require    => 'Service[lxc]'
-  ) end
+  context "when $containers" do
+    let(:params) { {
+      "containers"  => {
+        "vm0" => { "ensure" => 'present' },
+        "vm1" => { "ensure" => 'present' }
+      }
+    } }
+
+    %w{ vm0 vm1 }.each do |vm|
+      it { should contain_resource("Lxc::Vm[#{vm}]").with_ensure("present") }
+    end
+  end
 end

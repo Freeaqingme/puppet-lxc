@@ -8,8 +8,7 @@ define lxc::vm(
   $ensure        = 'present',
   $enable        = true,
   $comment       = $name,
-  $www_proxy     = undef,
-  $vmguest       = 'vmguest',
+  $www_proxy     = undef
 ) {
   $lxc_auto     = "/etc/lxc/auto/${name}.conf"
   $config_file  = "/etc/lxc/guests/${name}.conf"

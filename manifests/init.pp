@@ -35,22 +35,8 @@ class lxc (
     subscribe   => File_line['lxc resolver']
   }
 
-  user { $lxc::params::vmguest:
-    ensure     => present,
-    system     => true,
-    managehome => true,
-    shell      => '/bin/bash',
-    home       => "/home/${lxc::params::vmguest}",
-    require    => Service[$lxc::params::service]
-  }
-
   Service[$lxc::params::service] -> Lxc::Vm <| |>
   Service[$lxc::params::service] -> Lxc::Www::Proxy <| |>
-  Service[$lxc::params::service] -> Lxc::Ssh::Key <| |>
 
-  $vm_hash = {
-    vmguest    => $lxc::params::vmguest,
-  }
-  create_resources('lxc::vm', $containers, $vm_hash)
-  create_resources('lxc::ssh::key', $proxy_keys, $vm_hash)
+  create_resources('lxc::vm', $containers)
 }
