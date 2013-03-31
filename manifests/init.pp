@@ -1,10 +1,8 @@
 #
 class lxc (
   $containers = [],
-  $proxy_keys = [],
 ) {
   include 'lxc::params'
-  include 'nginx'
 
   package{ $lxc::params::packages:
     ensure => 'present'
@@ -36,7 +34,7 @@ class lxc (
   }
 
   Service[$lxc::params::service] -> Lxc::Vm <| |>
-  Service[$lxc::params::service] -> Lxc::Www::Proxy <| |>
+  Service[$lxc::params::service] -> Lxc::Proxy::Http <| |>
 
   create_resources('lxc::vm', $containers)
 }

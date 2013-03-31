@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe 'lxc' do
   it { should include_class("lxc::params") }
-  it { should include_class("nginx") }
 
   it { should contain_package("lxc") }
   it { should contain_package("resolvconf") }

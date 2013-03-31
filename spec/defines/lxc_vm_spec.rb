@@ -30,7 +30,7 @@ describe "lxc::vm" do
 
   it "set default hostname" do
     should contain_file("/etc/lxc/guests/my-vm.conf").with(
-      :content => /utsname = my-vm.vm.example.com/
+      :content => /utsname = my-vm/
     )
   end
 
@@ -42,10 +42,10 @@ describe "lxc::vm" do
     ) end
   end
 
-  context "with $www_proxy" do
-    let(:params) { { :www_proxy => 'example.com' } }
+  context "with $http_proxy" do
+    let(:params) { { :http_proxy => 'example.com' } }
 
-    it do should contain_resource("Lxc::Www::Proxy[my-vm]").with(
+    it do should contain_resource("Lxc::Proxy::Http[my-vm]").with(
       :ensure      => 'present',
       :server_name => 'example.com',
       :require     => 'Exec[lxc-start my-vm]'
@@ -132,10 +132,10 @@ describe "lxc::vm" do
       :ensure => 'absent'
     ) end
 
-    context "with $www_proxy" do
-      let(:params) { { :www_proxy => 'example.com', :ensure => 'absent' } }
+    context "with $http_proxy" do
+      let(:params) { { :http_proxy => 'example.com', :ensure => 'absent' } }
 
-      it do should contain_resource("Lxc::Www::Proxy[my-vm]").with(
+      it do should contain_resource("Lxc::Proxy::Http[my-vm]").with(
         :ensure  => 'absent',
         :require => 'Exec[lxc-destroy my-vm]'
       ) end
