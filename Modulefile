@@ -6,4 +6,4 @@ license 'MIT'
 summary 'LXC managment'
 project_page 'http://github.com/dima-exe/puppet-lxc'
 
-dependency 'puppetlabs/stdlib'
+dependency 'puppetlabs/stdlib', '>= 0'
