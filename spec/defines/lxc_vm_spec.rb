@@ -13,6 +13,7 @@ describe "lxc::vm" do
   it do should contain_exec("lxc-create my-vm").with(
     :creates => '/var/lib/lxc/my-vm',
     :command => '/usr/bin/lxc-create -n my-vm -t ubuntu -f /etc/lxc/guests/my-vm.conf',
+    :timeout => 30000,
     :require => 'File[/etc/lxc/guests/my-vm.conf]'
   ) end
 

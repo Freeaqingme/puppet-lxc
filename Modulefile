@@ -1,5 +1,5 @@
 name    'dmexe-lxc'
-version '0.1.0'
+version '0.1.1'
 source 'http://github.com/dima-exe/puppet-lxc'
 author 'Dmitry Galinsky'
 license 'MIT'

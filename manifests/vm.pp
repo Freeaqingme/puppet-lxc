@@ -33,6 +33,7 @@ define lxc::vm(
         creates   => "/var/lib/lxc/${name}",
         command   => "${lxc_create} -t ${template} -f ${config_file}",
         logoutput => 'on_failure',
+        timeout   => 30000,
         require   => File[$config_file]
       }
 
