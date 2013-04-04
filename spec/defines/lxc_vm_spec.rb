@@ -142,4 +142,20 @@ describe "lxc::vm" do
       ) end
     end
   end
+
+  context "when $facts" do
+    let(:prefix) { "/var/lib/lxc/my-vm/rootfs" }
+    let(:params) { {
+      :facts => {
+        "name" => "value"
+      }
+    } }
+
+    it { should contain_file("#{prefix}/etc/facter").with_ensure("directory") }
+    it { should contain_file("#{prefix}/etc/facter/facts.d").with_ensure("directory") }
+    it do should contain_file("#{prefix}/etc/facter/facts.d/lxc_module.yaml").with(
+      :ensure  => 'present',
+      :content => "--- \n  name: value"
+    ) end
+  end
 end

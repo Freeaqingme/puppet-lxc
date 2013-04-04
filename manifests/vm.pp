@@ -8,7 +8,8 @@ define lxc::vm(
   $ensure        = 'present',
   $enable        = true,
   $comment       = $name,
-  $http_proxy    = undef
+  $http_proxy    = undef,
+  $facts         = undef
 ) {
   $lxc_auto     = "/etc/lxc/auto/${name}.conf"
   $config_file  = "/etc/lxc/guests/${name}.conf"
@@ -67,6 +68,18 @@ define lxc::vm(
         }
         default: {
           fail('enable must be true or false')
+        }
+      }
+
+      if $facts != undef {
+        file {
+          "/var/lib/lxc/${name}/rootfs/etc/facter":
+            ensure => 'directory';
+          "/var/lib/lxc/${name}/rootfs/etc/facter/facts.d":
+            ensure => 'directory';
+          "/var/lib/lxc/${name}/rootfs/etc/facter/facts.d/lxc_module.yaml":
+            ensure  => 'present',
+            content => inline_template('<%= facts.to_yaml %>');
         }
       }
     }
