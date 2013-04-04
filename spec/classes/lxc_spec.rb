@@ -31,15 +31,26 @@ describe 'lxc' do
   ) end
 
   context "when $containers" do
-    let(:params) { {
+    let(:default_params) { {
       "containers"  => {
         "vm0" => { "ensure" => 'present' },
         "vm1" => { "ensure" => 'present' }
       }
     } }
+    let(:params) { default_params }
 
     %w{ vm0 vm1 }.each do |vm|
       it { should contain_resource("Lxc::Vm[#{vm}]").with_ensure("present") }
+    end
+
+    context "and $facts" do
+      let(:fact) { { "name" => "value" } }
+      let(:params) { default_params.merge :facts => fact }
+
+      %w{ vm0 vm1 }.each do |vm|
+        it { should contain_resource("Lxc::Vm[#{vm}]").with(:facts => fact ) }
+      end
+
     end
   end
 end

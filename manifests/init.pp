@@ -1,6 +1,7 @@
 #
 class lxc (
   $containers = [],
+  $facts      = undef
 ) {
   include 'lxc::params'
 
@@ -36,5 +37,5 @@ class lxc (
   Service[$lxc::params::service] -> Lxc::Vm <| |>
   Service[$lxc::params::service] -> Lxc::Proxy::Http <| |>
 
-  create_resources('lxc::vm', $containers)
+  create_resources('lxc::vm', $containers, { facts => $facts })
 }
