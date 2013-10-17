@@ -1,8 +1,17 @@
-#
-class lxc::params (
-  $packages    = ['lxc', 'resolvconf'],
-  $service     = 'lxc',
-  $net_service = 'lxc-net',
-  $nameserver  = '10.0.3.1'
-) {
+
+class lxc::params {
+
+  # The values in this file have only been tested and used with Ubuntu.
+  # Feel free to correct any of the paths (and file that PR!)
+
+  $vm_dir_path = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/              => '/var/lib/lxc',
+    /(?i:Gentoo|RedHat|CentOS|Scientific)/ => '/var/lxc',
+    /(?i:Amazon|Linux|Fedora)/             => '/var/lxc',
+    default                                => '/var/lib/lxc',
+  }
+
+  $config_dir_path    = '/etc/lxc/guests'
+  $autostart_dir_path = '/etc/lxc/auto'
+
 }

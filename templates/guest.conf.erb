@@ -1,14 +1,13 @@
-# Container with network virtualized using a pre-configured bridge named br0 and
-# veth pair virtual network devices
-lxc.utsname = <%= vm_hostname %>
+# File managed by Puppet
+
+lxc.utsname = <%= @hostname %>
 lxc.network.type = veth
 lxc.network.flags = up
-lxc.network.link = lxcbr0
-lxc.network.ipv4 = <%= vm_ip %>
+lxc.network.link = <%= @interface %>
+lxc.network.ipv4 = <%= @ip_v4 %>
+lxc.network.ipv6 = <%= @ip_v6 %>
 
-lxc.cgroup.memory.limit_in_bytes = <%= vm_mem_limit %>
-lxc.cgroup.memory.memsw.limit_in_bytes = <%= vm_mem_plus_swap_limit %>
+lxc.cgroup.memory.limit_in_bytes = <%= @mem_limit %>
+lxc.cgroup.memory.memsw.limit_in_bytes = <%= @total_mem_limit %>
 
 lxc.pts=1024
-
-

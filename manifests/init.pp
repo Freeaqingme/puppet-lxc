@@ -1,41 +1,38 @@
 #
 class lxc (
-  $containers = [],
-  $facts      = undef
-) {
-  include 'lxc::params'
 
-  package{ $lxc::params::packages:
+  $default_vm_template = 'ubuntu',
+  $default_interface   = 'brLxc',
+  $default_facts       = {},
+  $default_template    = 'lxc/guest.conf.erb',
+
+  $package_name        = ['lxc', 'lxc-templates'],
+  $service_name        = 'lxc',
+  $net_service_name    = 'lxc-net',
+  $config_dir_path     = $lxc::params::config_dir_path,
+  $autostart_dir_path  = $lxc::params::autostart_dir_path,
+  $vm_dir_path         = $lxc::params::vm_dir_path,
+
+) inherits lxc::params {
+
+  package{ 'lxc':
+    name   => $package_name,
     ensure => 'present'
   }
 
-  service { [$lxc::params::service, $lxc::params::net_service]:
+  service { 'lxc':
+    name    => [$service_name, $net_service_name],
     ensure  => 'running',
     enable  => true,
-    require => Package[$lxc::params::packages]
+    require => Package['lxc']
   }
 
-  file { '/etc/lxc/guests':
+  file { 'lxc-config-dir':
+    path    => $config_dir_path,
     ensure  => 'directory',
-    require => Service[$lxc::params::service],
+    require => Service['lxc'],
   }
 
-  file_line { 'lxc resolver':
-    ensure  => 'present',
-    line    => "nameserver ${lxc::params::nameserver}",
-    path    => '/etc/resolvconf/resolv.conf.d/head',
-    require => [Service[$lxc::params::net_service],
-                Package['resolvconf']]
-  }
+  Service[$service_name] -> Lxc::Vm <| |>
 
-  exec{ 'lxc resolvconf':
-    command     => '/sbin/resolvconf -u',
-    refreshonly => true,
-    subscribe   => File_line['lxc resolver']
-  }
-
-  Service[$lxc::params::service] -> Lxc::Vm <| |>
-  Service[$lxc::params::service] -> Lxc::Proxy::Http <| |>
-
-  create_resources('lxc::vm', $containers, { facts => $facts })
 }
