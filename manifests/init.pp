@@ -30,7 +30,7 @@ class lxc (
     enable  => true,
     require => Package['lxc']
   }
-  
+
   service { 'lxc-net':
     name    => $net_service_name,
     ensure  => 'running',

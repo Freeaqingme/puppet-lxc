@@ -75,8 +75,8 @@ define lxc::vm (
       }
 
       exec { "lxc-vm-${name}-create":
-        creates   => "/var/lib/lxc/${name}",
-        command   => "lxc-create -n ${name} -t ${template} -f ${config_file}",
+        creates   => "${lxc::vm_dir_path}/${name}",
+        command   => "lxc-create -n ${name} -t ${vm_template} -f ${config_file}",
         logoutput => 'on_failure',
         timeout   => 30000,
         require   => File[ "lxc-vm-${name}-conf" ]
@@ -87,7 +87,7 @@ define lxc::vm (
           file { "lxc-vm-${name}-autostart-symlink":
             path    => "${lxc::autostart_dir_path}/${name}.conf",
             ensure  => 'link',
-            target  => "/var/lib/lxc/${name}/config",
+            target  => "${lxc::vm_dir_path}/${name}/config",
             require => Exec["lxc-vm-${name}-create"]
           }
 
