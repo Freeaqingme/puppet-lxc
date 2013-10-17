@@ -8,7 +8,7 @@ class lxc (
   $default_mem_limit       = '256M',
   $default_total_mem_limit = '512M',
 
-  $package_name            = ['lxc', 'lxc-templates'],
+  $package_name            = 'lxc', # [ , 'lxc-templates'],
   $service_name            = 'lxc',
   $net_service_name        = 'lxc-net',
   $config_dir_path         = $lxc::params::config_dir_path,
