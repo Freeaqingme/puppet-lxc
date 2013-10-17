@@ -17,6 +17,8 @@ class lxc (
 
 ) inherits lxc::params {
 
+  # Todo Validation
+
   package{ 'lxc':
     name   => $package_name,
     ensure => 'present'

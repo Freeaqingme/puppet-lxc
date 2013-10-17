@@ -1,12 +1,6 @@
 #
 # Parameters
 #
-# [*mem_limit*]
-#   Ram limit. E.g. '512M'
-#
-# [*total_mem_limit*]
-#   Ram + Swap limit. E.g. '1024M'
-#
 # [*hostname*]
 #   Optional. Derived from $name
 #
@@ -21,6 +15,12 @@
 # [*enable*]
 #
 # [*comment*]
+#
+# [*mem_limit*]
+#   Ram limit. E.g. '512M'
+#
+# [*total_mem_limit*]
+#   Ram + Swap limit. E.g. '1024M'
 #
 # [*template*]
 #
@@ -50,14 +50,14 @@ define lxc::vm (
 
   include lxc
 
-  validate_string($mem_limit)
-  validate_string($total_mem_limit)
   validate_string($hostname)
-  validate_ipv4_address($ip_v4)
-  validate_ipv6_address($ip_v6)
+  if $ip_v4 == '' or validate_ipv4_address($ip_v4) {}
+  if $ip_v6 == '' or validate_ipv6_address($ip_v6) {}
   validate_re($ensure, ['present','absent' ], 'Valid values: present, absent')
   validate_bool($enable)
-  validate_string($comment)
+  if $comment == "" or validate_string($comment) {}
+  validate_string($mem_limit)
+  validate_string($total_mem_limit)
   validate_string($template)  
   validate_string($vm_template)
   validate_string($interface)
