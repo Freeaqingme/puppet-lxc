@@ -33,8 +33,6 @@
 #
 #
 define lxc::vm (
-  $mem_limit,
-  $total_mem_limit,
   $hostname        = $name,
   $ip_v4           = '',
   $ip_v6           = '',
@@ -42,6 +40,8 @@ define lxc::vm (
   $enable          = true,
   $comment         = 'Managed by Puppet',
 
+  $mem_limit       = $lxc::default_mem_limit,
+  $total_mem_limit = $lxc::default_total_mem_limit,
   $template        = $lxc::default_template,
   $vm_template     = $lxc::default_vm_template,
   $interface       = $lxc::default_interface,
