@@ -51,11 +51,11 @@ define lxc::vm (
   include lxc
 
   validate_string($hostname)
-  if $ip_v4 == '' or validate_ipv4_address($ip_v4) {}
-  if $ip_v6 == '' or validate_ipv6_address($ip_v6) {}
+  if $ip_v4 != '' { validate_ipv4_address($ip_v4) }
+  if $ip_v6 != '' { validate_ipv6_address($ip_v6) }
   validate_re($ensure, ['present','absent' ], 'Valid values: present, absent')
   validate_bool($enable)
-  if $comment == "" or validate_string($comment) {}
+  if $comment != '' { validate_string($comment) }
   validate_string($mem_limit)
   validate_string($total_mem_limit)
   validate_string($template)  
