@@ -25,7 +25,14 @@ class lxc (
   }
 
   service { 'lxc':
-    name    => [$service_name, $net_service_name],
+    name    => $service_name,
+    ensure  => 'running',
+    enable  => true,
+    require => Package['lxc']
+  }
+  
+  service { 'lxc-net':
+    name    => $net_service_name,
     ensure  => 'running',
     enable  => true,
     require => Package['lxc']
