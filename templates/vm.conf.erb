@@ -11,7 +11,7 @@ lxc.network.ipv4 = <%= @ip_v4 %>
 lxc.network.ipv6 = <%= @ip_v6 %>
 <% end %>
 
-<% if scope.lookupvar('::kernelmajversion') < 3.8 %>
+<% if scope.lookupvar('::kernelmajversion').to_f < 3.8 %>
 lxc.cgroup.memory.limit_in_bytes = <%= @ram_limit %>
 lxc.cgroup.memory.memsw.limit_in_bytes = <%= @memsw_limit %>
 <% else %>
