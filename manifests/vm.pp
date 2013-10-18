@@ -44,7 +44,7 @@ define lxc::vm (
   $total_mem_limit = $lxc::default_total_mem_limit,
   $template        = $lxc::default_template,
   $vm_template     = $lxc::default_vm_template,
-  $interface       = $lxc::default_interface,
+  $bridge          = $lxc::default_bridge,
   $facts           = $lxc::default_facts
 ) {
 
@@ -60,7 +60,7 @@ define lxc::vm (
   validate_string($total_mem_limit)
   validate_string($template)  
   validate_string($vm_template)
-  validate_string($interface)
+  validate_string($bridge)
 
   $config_file  = "${lxc::config_dir_path}/${name}.conf"
 

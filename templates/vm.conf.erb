@@ -3,9 +3,13 @@
 lxc.utsname = <%= @hostname %>
 lxc.network.type = veth
 lxc.network.flags = up
-lxc.network.link = <%= @interface %>
+lxc.network.link = <%= @bridge %>
+<% if @ip_v4 != '' %>
 lxc.network.ipv4 = <%= @ip_v4 %>
+<% end %>
+<% if @ip_v6 != '' %>
 lxc.network.ipv6 = <%= @ip_v6 %>
+<% end %>
 
 lxc.cgroup.memory.limit_in_bytes = <%= @mem_limit %>
 lxc.cgroup.memory.memsw.limit_in_bytes = <%= @total_mem_limit %>

@@ -1,0 +1,32 @@
+# File managed by Puppet
+
+# MIRROR to be used by ubuntu template at container creation:
+# Leaving it undefined is fine
+MIRROR="<%=@debootstrap_mirror%>"
+# or 
+#MIRROR="http://<host-ip-addr>:3142/archive.ubuntu.com/ubuntu"
+
+# LXC_AUTO - whether or not to start containers symlinked under
+# /etc/lxc/auto
+LXC_AUTO="true"
+
+# Leave USE_LXC_BRIDGE as "true" if you want to use lxcbr0 for your
+# containers.  Set to "false" if you'll use virbr0 or another existing
+# bridge, or mavlan to your host's NIC.
+USE_LXC_BRIDGE="<%= @configure_bridge ? "true" : "false" %>"
+
+# If you change the LXC_BRIDGE to something other than lxcbr0, then
+# you will also need to update your /etc/lxc/lxc.conf as well as the
+# configuration (/var/lib/lxc/<container>/config) for any containers
+# already created using the default config to reflect the new bridge
+# name.
+# If you have the dnsmasq daemon installed, you'll also have to update
+# /etc/dnsmasq.d/lxc and restart the system wide dnsmasq daemon.
+LXC_BRIDGE="<%=@default_bridge %>"
+LXC_ADDR="<%=@bridge_address %>"
+LXC_NETMASK="<%=@bridge_netmask %>"
+LXC_NETWORK="<%=@bridge_network %>"
+LXC_DHCP_RANGE="<%=@bridge_dhcp_range %>"
+LXC_DHCP_MAX="<%=@bridge_dhcp_max %>"
+
+LXC_SHUTDOWN_TIMEOUT=120
