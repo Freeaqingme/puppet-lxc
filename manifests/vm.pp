@@ -99,15 +99,15 @@ define lxc::vm (
           }
           
           exec { "lxc-vm-${name}-restart":
-            unless      => "lxc-info -s -n ${name} | grep RUNNING",
-            command     => "x=`lxc-info -n munin -s` /bin/bash -c 'shopt -s extglob; if [ \"${x/state:*([[:space:]])/}\" ==  \"STOPPED\" ]; then \
-                              lxc-start -n ${name} -d; \
+            command     => "/bin/bash -c 'x=`lxc-info -n ${name} -s` shopt -s extglob; if [ \"\${x/state:*([[:space:]])/}\" ==  \"RUNNING\" ]; then \
+                              lxc-shutdown -n ${name} -w \
                             else \
-                              lxc-restart -n ${name}; \
-                            fi",
+                              /bin/true; \
+                            fi'",
             refreshonly => true,
             logoutput   => 'on_failure',
-            require     => Exec["lxc-vm-${name}-create"]
+            require     => Exec["lxc-vm-${name}-create"],
+            notify      => Exec["lxc-vm-${name}-start"]
           }
         }
         false: {

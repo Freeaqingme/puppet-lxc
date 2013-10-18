@@ -28,8 +28,8 @@ class lxc (
   # Todo Validation
 
   package{ 'lxc':
-    name   => $package_name,
-    ensure => 'present'
+    name    => "${package_name}",
+    ensure  => 'present',
   }
 
   file { 'lxc-defaults':
