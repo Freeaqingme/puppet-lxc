@@ -70,7 +70,7 @@ define lxc::vm (
       file { "lxc-vm-${name}-conf":
         path    => $config_file,
         ensure  => 'present',
-        content => template('lxc/guest.conf.erb'),
+        content => template($template),
         require => File['lxc-config-dir']
       }
 
