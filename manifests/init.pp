@@ -32,6 +32,16 @@ class lxc (
     ensure => 'present'
   }
 
+  file { 'lxc-defaults':
+    path    => '/etc/default/lxc', # Todo: Make configurable
+    owner   => root,
+    group   => root,
+    mode    => 0640,
+    content => template('lxc/defaults.erb'),
+    require => Package[ 'lxc' ],
+    notify  => Service[ 'lxc' ],
+  }
+
   service { 'lxc':
     name    => $service_name,
     ensure  => 'running',
@@ -50,14 +60,6 @@ class lxc (
     path    => $config_dir_path,
     ensure  => 'directory',
     require => Service['lxc'],
-  }
-
-  file { 'lxc-defaults':
-    path    => '/etc/default/lxc',
-    owner   => root,
-    group   => root,
-    mode    => 0640,
-    content => template('lxc/defaults.erb'),
   }
 
   Service[$service_name] -> Lxc::Vm <| |>
