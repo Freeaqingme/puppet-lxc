@@ -5,8 +5,8 @@ class lxc (
   $default_bridge          = 'lxcbr0',
   $default_facts           = { 'lxc' => true },
   $default_template        = 'lxc/vm.conf.erb',
-  $default_mem_limit       = '256M',
-  $default_total_mem_limit = '512M',
+  $default_ram_limit       = '256M',
+  $default_memsw_limit     = '512M',
 
   $configure_bridge        = true,
   $bridge_address          = '10.0.3.1',

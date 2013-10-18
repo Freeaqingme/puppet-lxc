@@ -40,8 +40,8 @@ define lxc::vm (
   $enable          = true,
   $comment         = 'Managed by Puppet',
 
-  $mem_limit       = $lxc::default_mem_limit,
-  $total_mem_limit = $lxc::default_total_mem_limit,
+  $ram_limit       = $lxc::default_ram_limit,
+  $memsw_limit     = $lxc::default_memsw_limit,
   $template        = $lxc::default_template,
   $vm_template     = $lxc::default_vm_template,
   $bridge          = $lxc::default_bridge,
@@ -56,8 +56,8 @@ define lxc::vm (
   validate_re($ensure, ['present','absent' ], 'Valid values: present, absent')
   validate_bool($enable)
   if $comment != '' { validate_string($comment) }
-  validate_string($mem_limit)
-  validate_string($total_mem_limit)
+  validate_string($ram_limit)
+  validate_string($memsw_limit)
   validate_string($template)  
   validate_string($vm_template)
   validate_string($bridge)
