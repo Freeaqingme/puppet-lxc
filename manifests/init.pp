@@ -3,11 +3,11 @@ class lxc (
 
   $default_vm_template     = 'ubuntu',
   $default_bridge          = 'lxcbr0',
-  $default_facts           = {},
+  $default_facts           = { 'lxc' => true },
   $default_template        = 'lxc/vm.conf.erb',
   $default_mem_limit       = '256M',
   $default_total_mem_limit = '512M',
-  
+
   $configure_bridge        = true,
   $bridge_address          = '10.0.3.1',
   $bridge_netmask          = '255.255.255.0',
@@ -22,7 +22,7 @@ class lxc (
   $config_dir_path         = $lxc::params::config_dir_path,
   $autostart_dir_path      = $lxc::params::autostart_dir_path,
   $vm_dir_path             = $lxc::params::vm_dir_path,
-  
+
 ) inherits lxc::params {
 
   # Todo Validation
