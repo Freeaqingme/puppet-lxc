@@ -92,10 +92,22 @@ define lxc::vm (
           }
 
           exec { "lxc-vm-${name}-start":
-            unless    => "lxc-info -n ${name} | grep state | grep RUNNING",
+            unless    => "lxc-info -s -n ${name} | grep RUNNING",
             command   => "lxc-start -n ${name} -d",
             logoutput => 'on_failure',
             require   => Exec["lxc-vm-${name}-create"]
+          }
+          
+          exec { "lxc-vm-${name}-restart":
+            unless      => "lxc-info -s -n ${name} | grep RUNNING",
+            command     => "x=`lxc-info -n munin -s` /bin/bash -c 'shopt -s extglob; if [ \"${x/state:*([[:space:]])/}\" ==  \"STOPPED\" ]; then \
+                              lxc-start -n ${name} -d; \
+                            else \
+                              lxc-restart -n ${name}; \
+                            fi",
+            refreshonly => true,
+            logoutput   => 'on_failure',
+            require     => Exec["lxc-vm-${name}-create"]
           }
         }
         false: {
@@ -105,7 +117,7 @@ define lxc::vm (
           }
 
           exec { "lxc-vm-${name}-stop":
-            unless    => "lxc-info -n ${name} | grep state | grep STOPPED",
+            unless    => "lxc-info -s -n ${name} | grep STOPPED",
             command   => "lxc-shutdown -n ${name} -w 60",
             logoutput => 'on_failure',
             require   => Exec["lxc-vm-${name}-create"]
