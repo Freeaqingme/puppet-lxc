@@ -129,12 +129,12 @@ define lxc::vm (
         file { [ "${lxc::vm_dir_path}/${name}/rootfs/etc/facter",
                  "${lxc::vm_dir_path}/${name}/rootfs/etc/facter/facts.d" ]:
             ensure => 'directory',
-            require => Exc["lxc-vm-${name}-create"]
+            require => Exec[ "lxc-vm-${name}-create" ]
         }
 
         file { "${lxc::vm_dir_path}/${name}/rootfs/etc/facter/facts.d/lxc_module.yaml":
           ensure  => 'present',
-          content => inline_template('<%= facts.to_yaml %>'),
+          content => inline_template('<%=@facts.to_yaml %>'),
           require => File["${lxc::vm_dir_path}/${name}/rootfs/etc/facter/facts.d"]
         }
       }
