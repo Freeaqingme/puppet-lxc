@@ -39,7 +39,7 @@ class lxc (
     mode    => 0640,
     content => template('lxc/defaults.erb'),
     require => Package[ 'lxc' ],
-    notify  => Service[ 'lxc' ],
+    before  => Service[ 'lxc' ],
   }
 
   service { 'lxc':
